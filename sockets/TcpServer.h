@@ -8,7 +8,7 @@ private:
   SocketDescriptor socketFd_ = -1;
 
 public:
-  TcpServer(std::string const &ip, int port);
+  TcpServer(std::string const &ip, int port, int reuseAddress);
   ~TcpServer();
   TcpServer(const TcpServer &) = delete;
   TcpServer &operator=(const TcpServer &) = delete;

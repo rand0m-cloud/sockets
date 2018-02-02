@@ -26,22 +26,22 @@ TcpSocket::TcpSocket(SocketDescriptor fd) {
   socketFd_ = fd;
 }
 
-bool TcpSocket::sendString(const std::string &string) {
+bool TcpSocket::sendData(char *message, size_t size) {
 
-  if (send(socketFd_, &string[0], string.size(), 0) < 0) {
+  if (send(socketFd_, message, size, 0) < 0) {
     perror("Failed to write to client");
     return false;
   }
   return true;
 }
 
-bool TcpSocket::getString(std::string &string) {
-  if (recv(socketFd_, &string[0], string.size(), 0) < 0) {
+int TcpSocket::getData(char *message, size_t size) {
+  int data_recieved = recv(socketFd_, message, size, 0);
+  if (data_recieved < 0) {
     perror("Failed to recieve");
-    return false;
   }
 
-  return true;
+  return data_recieved;
 }
 TcpSocket::~TcpSocket() {
   if (socketFd_ > 0) {

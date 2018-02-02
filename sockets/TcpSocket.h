@@ -12,6 +12,6 @@ public:
   ~TcpSocket();
   TcpSocket(const TcpSocket &) = delete;
   TcpSocket &operator=(const TcpSocket &) = delete;
-  bool sendString(std::string const &);
-  bool getString(std::string &);
+  bool sendData(char *message, size_t size);
+  int getData(char *message, size_t size);
 };

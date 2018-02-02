@@ -1,1 +1,1 @@
-add_library(sockets TcpSocket.cpp)
+add_library(sockets TcpSocket.cpp TcpServer.cpp)
