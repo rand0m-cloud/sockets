@@ -1,0 +1,6 @@
+include(FindProtobuf)
+find_package(Protobuf REQUIRED)
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS test.proto)
+link_libraries()
+add_library(protobuffers ${PROTO_SRCS})
+target_link_libraries(protobuffers ${PROTOBUF_LIBRARIES})
