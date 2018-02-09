@@ -26,7 +26,7 @@ TcpSocket::TcpSocket(SocketDescriptor fd) {
   socketFd_ = fd;
 }
 
-bool TcpSocket::sendData(char *message, size_t size) {
+bool TcpSocket::sendData(const char *message, size_t size) {
 
   if (send(socketFd_, message, size, 0) < 0) {
     perror("Failed to write to client");
