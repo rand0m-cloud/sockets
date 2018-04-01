@@ -1,6 +1,7 @@
 #pragma once
 #include "TcpSocket.h"
 #include "Types.h"
+#include <memory>
 class TcpServer {
 private:
   Ipv4Address ipAddr_;
@@ -14,5 +15,5 @@ public:
   ~TcpServer();
   TcpServer(const TcpServer &) = delete;
   TcpServer &operator=(const TcpServer &) = delete;
-  TcpSocket *getClient();
+  std::unique_ptr<TcpSocket> getClient();
 };

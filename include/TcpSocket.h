@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include <vector>
 class TcpSocket {
 private:
   Ipv4Address ipAddr_;
@@ -12,6 +13,6 @@ public:
   ~TcpSocket();
   TcpSocket(const TcpSocket &) = delete;
   TcpSocket &operator=(const TcpSocket &) = delete;
-  bool sendData(const char *message, size_t size);
-  int getData(char *message, size_t size);
+  bool sendData(const std::string &message);
+  int getData(std::vector<char> &message);
 };

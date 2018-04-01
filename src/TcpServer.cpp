@@ -1,9 +1,13 @@
 #include "TcpServer.h"
 #include <fcntl.h>
+#include <signal.h>
 #include <unistd.h>
 TcpServer::TcpServer(std::string const &ip, int port, int reuseAddress,
                      int connections, bool shouldBlock)
     : shouldBlock_(shouldBlock) {
+  if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
+    perror("Failed to set SIGPIPE to ignore");
+  }
   ipAddr_ = Ipv4Address(ip, port);
   socketFd_ = socket(AF_INET, SOCK_STREAM, 0);
   if (socketFd_ < 0) {
@@ -26,7 +30,7 @@ TcpServer::TcpServer(std::string const &ip, int port, int reuseAddress,
     perror("Error on listen");
   }
 }
-TcpSocket *TcpServer::getClient() {
+std::unique_ptr<TcpSocket> TcpServer::getClient() {
   // clilen = sizeof(cli_addr);
   // newsockfd = accept(sockfd,
   //   (struct sockaddr *) &cli_addr,
@@ -42,6 +46,6 @@ TcpSocket *TcpServer::getClient() {
     }
     perror("Error on accept");
   }
-  return new TcpSocket(clientFd);
+  return std::unique_ptr<TcpSocket>(new TcpSocket(clientFd));
 }
 TcpServer::~TcpServer() { close(socketFd_); }
